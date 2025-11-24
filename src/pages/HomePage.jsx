@@ -13,7 +13,6 @@ const HomePage = () => {
   
   return (
     <section className="change-gradient">
-      
     <Preloader />
 
     <HeaderOne />

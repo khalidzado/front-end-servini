@@ -52,15 +52,19 @@ const HeaderOne = () => {
     <>
       <div className="overlay"></div>
       <div className={`side-overlay ${active && "show"}`}></div>
+      {/* ==================== Header Start Here ==================== */}
       <header className={`header ${scroll ? "fixed-header" : ""} `}>
         <div className="container container-full">
           <nav className="header-inner flx-between">
+            {/* Logo Start */}
             <div className="logo">
               <Link to="/" className="link white-version" >
                 <img src="/assets/images/logo/logo-homev1.png" alt="Logo" />
               </Link>
               
             </div>
+            {/* Logo End  */}
+            {/* Menu Start  */}
             <div className="header-menu d-lg-block d-none">
               <ul className="nav-menu flx-align">
                 <li className="nav-menu__item">
@@ -79,15 +83,15 @@ const HeaderOne = () => {
                   </NavLink>
                 </li>
                 <li className="nav-menu__item">
-                  <NavLink to="/contact" className="nav-menu__link">
+                  <NavLink to="/apropos" className="nav-menu__link">
                   À Propos
                   </NavLink>
                 </li>
               </ul>
             </div>
-          
+    
             <div className="header-right flx-align">
-      
+             
             
               
               <div className="header-right__inner gap-3 flx-align d-lg-flex d-none mr-10">
@@ -119,9 +123,11 @@ const HeaderOne = () => {
                 <i className="las la-bars" />
               </button>
             </div>
+            {/* Header Right End  */}
           </nav>
         </div>
       </header>
+      {/* ==================== Header End Here ==================== */}
 
       <div className={`mobile-menu d-lg-none d-block ${active && "active"}`}>
         <button type="button" className="close-button text-body hover-text-main" onClick={mobileMenu}>

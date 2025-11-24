@@ -9,16 +9,7 @@ const FooterOne = () => {
           alt=""
           className="bg-pattern"
         />
-        <img
-          src="/assets/images/shapes/elem2.png"
-          alt=""
-          className="element one"
-        />
-        <img
-          src="/assets/images/shapes/elem2.png"
-          alt=""
-          className="element two"
-        />
+       
         <img
           src="/assets/images/gradients/footer-gradient.png"
           alt=""
@@ -105,7 +96,7 @@ const FooterOne = () => {
                     </Link>
                   </li>
                   <li className="footer-lists__item">
-                    <Link to="/" className="footer-lists__link">
+                    <Link to="/apropos" className="footer-lists__link">
                     À Propos
                     </Link>
                   </li>

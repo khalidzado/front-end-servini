@@ -8,11 +8,7 @@ const HowItWork = () => {
         alt=""
         className="position-absolute end-0 top-0 z-index--1"
       />
-      <img
-        src="/assets/images/shapes/elem2.png"
-        alt=""
-        className="element two"
-      />
+     
       <div className="container container-two">
         <div className="section-heading style-left style-flex flx-between align-items-end gap-3">
           <div className="section-heading__inner w-lg">
@@ -21,7 +17,7 @@ const HowItWork = () => {
             C’est simple, rapide et sécurisé — Trouvez Votre Prestataire, en 3 étapes.
             </p>
           </div>
-          <Link to="#" className="btn btn-main btn-lg pill">
+          <Link to="/register" className="btn btn-main btn-lg pill">
           Commencez maintenant          </Link>
         </div>
         <div className="row gy-4">

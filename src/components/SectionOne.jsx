@@ -126,9 +126,6 @@ const SectionOne = () => {
               }}
             />
           </Link>
-          <button type="button" className="product-item__wishlist">
-            <i className="fas fa-heart" />
-          </button>
         </div>
         <div className="product-item__content">
           <h6 className="product-item__title">
@@ -196,11 +193,7 @@ const SectionOne = () => {
         alt=""
         className="bg--gradient white-version"
       />
-      <img
-        src="/assets/images/shapes/elem2.png"
-        alt=""
-        className="element one"
-      />
+    
       <div className="container container-two">
         <div className="section-heading">
           <h3 className="section-heading__title">Nos prestataires</h3>

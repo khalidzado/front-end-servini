@@ -21,9 +21,11 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
+    // Nettoyer l'erreur du champ en cours de modification
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
+    // Nettoyer l'erreur générale
     if (errors.general) {
       setErrors(prev => ({ ...prev, general: "" }));
     }
@@ -225,16 +227,7 @@ const Login = () => {
                   {errors.password && <small className="text-danger">{errors.password}</small>}
                 </div>
 
-                <div className="col-12">
-                  <div className="flx-between gap-1">
-                    <Link
-                      to="#"
-                      className="forgot-password text-decoration-underline text-main text-poppins font-14"
-                    >
-                      Mot de passe oublié ?
-                    </Link>
-                  </div>
-                </div>
+               
 
                 <div className="col-12">
                   <button
