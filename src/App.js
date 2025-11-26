@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import RouteScrollToTop from "./helper/RouteScrollToTop";
 
-// --- Composant de Sécurité ---
+// --- Composant de Securite ---
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // --- Pages Publiques ---
@@ -39,7 +39,7 @@ function App() {
       <Routes>
         
         {/* ================================================= */}
-        {/* 1. ZONE PUBLIQUE (Accessible à tout le monde)     */}
+        {/* 1. ZONE PUBLIQUE (Accessible a tout le monde)     */}
         {/* ================================================= */}
         <Route path="/" element={<HomePage />} />
         <Route path="/all-providers" element={<AllProviderPage />} />
@@ -55,20 +55,20 @@ function App() {
 
 
         {/* ================================================= */}
-        {/* 2. ZONE ADMIN (Sécurisée - Rôle 'admin' requis)   */}
+        {/* 2. ZONE ADMIN (Securisee - Role 'admin' requis)   */}
         {/* ================================================= */}
-        {/* L'élément parent ProtectedRoute protège toutes les routes enfants */}
+        {/* element parent ProtectedRoute protege toutes les routes enfants */}
         <Route element={<ProtectedRoute allowedRole="admin" />}>
             <Route path="/dashboard-admin" element={<DashboardAdminPage />} />        
             <Route path="/liste-prestataires" element={<DashboardListePrestatairePage />} />
-            {/* Ajoutez d'autres routes Admin ici si nécessaire */}
+            {/* Ajoutez d'autres routes Admin ici si necessaire */}
         </Route>
 
 
         {/* ================================================= */}
-        {/* 3. ZONE PRESTATAIRE (Sécurisée - Rôle 'prestataire') */}
+        {/* 3. ZONE PRESTATAIRE (Securisee - Role 'prestataire') */}
         {/* ================================================= */}
-        {/* L'élément parent ProtectedRoute protège toutes les routes enfants */}
+        {/* L'element parent ProtectedRoute protege toutes les routes enfants */}
         <Route element={<ProtectedRoute allowedRole="prestataire" />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/dashboard-profile" element={<DashboardProfilePage />} />
@@ -79,9 +79,9 @@ function App() {
 
 
         {/* ================================================= */}
-        {/* 4. PAGE 404 (Route par défaut)                    */}
+        {/* 4. PAGE 404 (Route par defaut)                    */}
         {/* ================================================= */}
-        {/* Si l'utilisateur tape une URL qui n'existe pas, on le renvoie à l'accueil ou login */}
+        {/* Si l'utilisateur tape une URL qui n'existe pas, on le renvoie a l'accueil ou login */}
         <Route path="*" element={<HomePage />} />
 
       </Routes>
