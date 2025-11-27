@@ -388,7 +388,7 @@ const AllProviders = () => {
                         disabled={!selectedVille} // Optionnel : désactiver si vide
                     >
                       <option value="">
-                        {selectedVille ? "Sélectionner un quartier" : "Choisir une ville d'abord"}
+                        {selectedVille ? "Sélectionner un Zone" : "Choisir une ville d'abord"}
                       </option>
                       {zonesToDisplay.map((zone, index) => (
                         <option key={index} value={zone}>{zone}</option>
