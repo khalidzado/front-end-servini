@@ -21,6 +21,67 @@ const AllProviders = () => {
   const [selectedRating, setSelectedRating] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(6); // 6 éléments par page par défaut
+
+  // --- DONNÉES GÉOGRAPHIQUES DYNAMIQUES COMPLÈTES ---
+  // Mise à jour avec El Jadida, Salé et corrections d'accents
+  const villesZones = {
+    "Agadir": [
+      "Centre-ville", "Talborjt", "Dakhla", "Hay Salam", "Al Houda", 
+      "Bensergao", "Anza", "Tikiouine", "Ihzchach", "Hay Mohammadi"
+    ],
+    "Casablanca": [
+      "Maârif", "Sidi Bernoussi", "Ain Sebaâ", "Hay Mohammadi", 
+      "Derb Sultan", "Sidi Moumen", "Hay Hassani", "Oulfa", "Bourgogne", "Bernoussi"
+    ],
+    "Rabat": [
+      "Agdal", "Hay Riad", "Yacoub El Mansour", "Takaddoum", 
+      "L'Océan", "Hassan", "Akkari", "Souissi"
+    ],
+    "Salé": [
+      "Tabriquet", "Bettana", "Hay Karima", "Sala Al Jadida", 
+      "Sidi Moussa", "Hay Rahma", "Laayayda", "Kariat Oulad Moussa"
+    ],
+    "Marrakech": [
+      "Gueliz", "Médina", "Daoudiate", "Sidi Youssef Ben Ali", 
+      "Mhamid", "Al Massira", "Azli", "Targa"
+    ],
+    "Tanger": [
+      "Beni Makada", "Mesnana", "Dradeb", "Moghogha", 
+      "Playa", "Val Fleuri", "Bir Chifa", "Malabata"
+    ],
+    "Fès": [
+      "Saiss", "Narjiss", "Ville Nouvelle", "Médina", 
+      "Zouagha", "Bensouda", "Atlas"
+    ],
+    "Meknès": [
+      "Hamria", "Ville Nouvelle", "Sidi Baba", "Wislane", 
+      "Bassin", "Marjane", "Belle Vue", "Plaisance"
+    ],
+    "Oujda": [
+      "Centre Ville", "Lazaret", "Al Qods", "Al Wahda", 
+      "Sidi Yahya", "Village Couture", "Hay Andalous"
+    ],
+    "Kénitra": [
+      "Centre Ville", "Maamora", "Saknia", "Ouled Oujih", 
+      "Bir Rami", "Val Fleuri", "La Ville Haute"
+    ],
+    "Tétouan": [
+      "Centre Ville", "Martil", "M'diq", "Saniat Rmel", 
+      "Touila", "Coelma", "Ain Khabbaz", "Wilaya"
+    ],
+    "El Jadida": [
+      "Centre Ville", "Sidi Bouzid", "El Manar", "Hay Salam", 
+      "Najmat", "Al Matar", "Cité Portugaise"
+    ],
+    "Safi": [
+      "Centre Ville", "Plateau", "Biada", "Kouki", 
+      "Sidi Bouzid", "Jrifat", "Azib Derai"
+    ],
+    "Mohammedia": [
+      "Centre Ville", "El Alia", "Rachidia", "Monica", 
+      "La Colline", "Kasbah"
+    ]
+  };
   
   const handleClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -130,6 +191,7 @@ const AllProviders = () => {
     switch(filterName) {
         case 'ville':
             setSelectedVille('');
+            setSelectedZone(''); // Reset zone aussi quand on reset ville
             break;
         case 'zone':
             setSelectedZone('');
@@ -251,6 +313,13 @@ const AllProviders = () => {
     return pages;
   };
 
+  // CALCULER LES ZONES À AFFICHER
+  // Si une ville est sélectionnée, on utilise la liste mappée dans villesZones
+  // Sinon, on utilise toutes les zones retournées par l'API
+  const zonesToDisplay = selectedVille 
+    ? (villesZones[selectedVille] || [])
+    : (filters.zones || []);
+
   return (
     <section className={`all-product padding-y-120 ${activeButton === "list-view" ? "list-view" : ""}`}>
       <div className="container container-two">
@@ -290,17 +359,21 @@ const AllProviders = () => {
                         id="ville" 
                         className="common-input border-gray-five" 
                         value={selectedVille}
-                        onChange={(e) => { setSelectedVille(e.target.value); setCurrentPage(1); }}
+                        onChange={(e) => { 
+                            setSelectedVille(e.target.value); 
+                            setSelectedZone(''); // Reset zone quand la ville change
+                            setCurrentPage(1); 
+                        }}
                     >
                       <option value="">Sélectionner une ville</option>
-                      {filters.villes && filters.villes.map((ville, index) => (
+                      {Object.keys(villesZones).sort().map((ville, index) => (
                         <option key={index} value={ville}>{ville}</option>
                       ))}
                     </select>
                   </div>
                 </div>
                 
-                {/* Filtre Zones */}
+                {/* Filtre Zones (DYNAMIQUE) */}
                 <div className="col-sm-4">
                   <div className="flx-between gap-1">
                     <label htmlFor="zone" className="form-label font-16">Zone</label>
@@ -312,9 +385,12 @@ const AllProviders = () => {
                         className="common-input border-gray-five" 
                         value={selectedZone}
                         onChange={(e) => { setSelectedZone(e.target.value); setCurrentPage(1); }}
+                        disabled={!selectedVille} // Optionnel : désactiver si vide
                     >
-                      <option value="">Sélectionner une zone</option>
-                      {filters.zones && filters.zones.map((zone, index) => (
+                      <option value="">
+                        {selectedVille ? "Sélectionner un quartier" : "Choisir une ville d'abord"}
+                      </option>
+                      {zonesToDisplay.map((zone, index) => (
                         <option key={index} value={zone}>{zone}</option>
                       ))}
                     </select>
@@ -341,20 +417,7 @@ const AllProviders = () => {
                 </div>
               </div>
               
-              {/* Bouton Reset tous les filtres */}
-              {(selectedVille || selectedZone || selectedPrice || selectedCategory || selectedRating) && (
-                <div className="row mt-3">
-                  <div className="col-12">
-                    <button 
-                      type="button" 
-                      className="btn btn-outline-danger btn-sm"
-                      onClick={resetAllFilters}
-                    >
-                      <i className="las la-times-circle"></i> Réinitialiser tous les filtres
-                    </button>
-                  </div>
-                </div>
-              )}
+            
             </div>
           </div>
           

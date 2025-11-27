@@ -19,16 +19,82 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const villes = ["Agadir", "Casablanca", "Rabat", "Marrakech", "Tanger", "Fes"];
-  const zones = ["Centre-ville", "Banlieue", "Zone industrielle", "Zone résidentielle"];
-  const categories = ["Plomberie", "Électricité", "Menuiserie", "Peinture", "Jardinage", "Nettoyage"];
+  // --- DONNÉES GÉOGRAPHIQUES DYNAMIQUES ---
+  const villesZones = {
+    "Agadir": [
+      "Centre-ville", "Talborjt", "Dakhla", "Hay Salam", "Al Houda", 
+      "Bensergao", "Anza", "Tikiouine", "Ihzchach", "Hay Mohammadi"
+    ],
+    "Casablanca": [
+      "Maârif", "Sidi Bernoussi", "Ain Sebaâ", "Hay Mohammadi", 
+      "Derb Sultan", "Sidi Moumen", "Hay Hassani", "Oulfa", "Bourgogne", "Bernoussi"
+    ],
+    "Rabat": [
+      "Agdal", "Hay Riad", "Yacoub El Mansour", "Takaddoum", 
+      "L'Océan", "Hassan", "Akkari", "Souissi"
+    ],
+    "Marrakech": [
+      "Gueliz", "Médina", "Daoudiate", "Sidi Youssef Ben Ali", 
+      "Mhamid", "Al Massira", "Azli", "Targa"
+    ],
+    "Tanger": [
+      "Beni Makada", "Mesnana", "Dradeb", "Moghogha", 
+      "Playa", "Val Fleuri", "Bir Chifa", "Malabata"
+    ],
+    "Fes": [
+      "Saiss", "Narjiss", "Ville Nouvelle", "Médina", 
+      "Zouagha", "Bensouda", "Atlas"
+    ],
+    "Meknès": [
+      "Hamria", "Ville Nouvelle", "Sidi Baba", "Wislane", 
+      "Bassin", "Marjane", "Belle Vue", "Plaisance"
+    ],
+    "Oujda": [
+      "Centre Ville", "Lazaret", "Al Qods", "Al Wahda", 
+      "Sidi Yahya", "Village Couture", "Hay Andalous"
+    ],
+    "Kenitra": [
+      "Centre Ville", "Maamora", "Saknia", "Ouled Oujih", 
+      "Bir Rami", "Val Fleuri", "La Ville Haute"
+    ],
+    "Tetouan": [
+      "Centre Ville", "Martil", "M'diq", "Saniat Rmel", 
+      "Touila", "Coelma", "Ain Khabbaz"
+    ],
+    "Safi": [
+      "Centre Ville", "Plateau", "Biada", "Kouki", 
+      "Sidi Bouzid", "Jrifat", "Azib Derai"
+    ],
+    "Mohammedia": [
+      "Centre Ville", "El Alia", "Rachidia", "Monica", 
+      "La Colline", "Kasbah"
+    ]
+  };
+
+  const villes = Object.keys(villesZones).sort(); // Tri alphabétique pour une meilleure UX
+  const categories = ["Plomberie", "Électricité", "Menuiserie", "Peinture", "Jardinage", "Nettoyage", "Mécanique"];
+
+
+  // Calculer les zones disponibles en fonction de la ville choisie
+  const availableZones = formData.ville ? villesZones[formData.ville] : [];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value
-    }));
+    
+    if (name === "ville") {
+      // Si on change la ville, on reset la zone
+      setFormData(prev => ({
+        ...prev,
+        ville: value,
+        zone: "" // Reset de la zone pour forcer une nouvelle sélection
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value
+      }));
+    }
+
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
@@ -73,7 +139,6 @@ const Register = () => {
     setErrors({});
 
     try {
-      // Update this URL to match your Laravel API endpoint
       const response = await fetch("http://localhost:8000/api/prestataire/register", {
         method: "POST",
         headers: {
@@ -95,7 +160,6 @@ const Register = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // Handle validation errors from Laravel
         if (data.errors) {
           setErrors(data.errors);
         } else {
@@ -104,7 +168,6 @@ const Register = () => {
         return;
       }
 
-      // Success - redirect to login with success message
       navigate("/login", { 
         state: { message: "Inscription réussie! Vous pouvez maintenant vous connecter." } 
       });
@@ -129,13 +192,10 @@ const Register = () => {
           />
           <div className="account-thumb">
             <img src="/assets/images/thumbs/inscription.png" alt="" />
-            
           </div>
         </div>
 
         <div className="account__right padding-t-120 flx-align">
-          
-
           <div className="account-content">
             <Link to="/" className="logo mb-64">
               <img
@@ -151,7 +211,7 @@ const Register = () => {
             </Link>
 
             <h4 className="account-content__title mb-48 text-capitalize">
-              Créer votre compte
+              Créer votre compte Prestataire
             </h4>
 
             {errors.general && (
@@ -244,6 +304,7 @@ const Register = () => {
                   {errors.email && <small className="text-danger">{errors.email}</small>}
                 </div>
 
+                {/* SÉLECTION DE LA VILLE */}
                 <div className="col-sm-6 col-xs-6">
                   <label htmlFor="ville" className="form-label mb-2 font-18 font-heading fw-600">
                     Ville
@@ -265,6 +326,7 @@ const Register = () => {
                   {errors.ville && <small className="text-danger">{errors.ville}</small>}
                 </div>
 
+                {/* SÉLECTION DE LA ZONE (DYNAMIQUE) */}
                 <div className="col-sm-6 col-xs-6">
                   <label htmlFor="zone" className="form-label mb-2 font-18 font-heading fw-600">
                     Zone
@@ -276,9 +338,12 @@ const Register = () => {
                       name="zone"
                       value={formData.zone}
                       onChange={handleChange}
+                      disabled={!formData.ville} // Désactivé si aucune ville n'est choisie
                     >
-                      <option value="">Sélectionner une zone</option>
-                      {zones.map((zone, index) => (
+                      <option value="">
+                        {formData.ville ? "Sélectionner un Zone" : "Choisir une ville d'abord"}
+                      </option>
+                      {availableZones.map((zone, index) => (
                         <option key={index} value={zone}>{zone}</option>
                       ))}
                     </select>

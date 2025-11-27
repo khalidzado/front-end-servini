@@ -13,6 +13,7 @@ import GetReservationPage from "./pages/GetReservationPage";
 import CheckReservationPage from "./pages/CheckReservationPage";
 import ThankYouPage from "./pages/ThankYouPage";
 import ContactPage from "./pages/ContactPage";
+import AproposPage from "./pages/AproposPage";
 
 // --- Pages d'Authentification ---
 import RegisterPage from "./pages/RegisterPage";
@@ -48,6 +49,7 @@ function App() {
         <Route path="/check-reservation" element={<CheckReservationPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/apropos" element={<AproposPage />} />
         
         {/* Login / Register */}
         <Route path="/register" element={<RegisterPage />} />
