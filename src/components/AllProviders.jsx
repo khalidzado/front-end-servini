@@ -6,24 +6,21 @@ const AllProviders = () => {
   const [activeButton, setActiveButton] = useState("grid-view");
   const [filter, setFilter] = useState(false);
   
-  // États pour les données de l'API
   const [prestataires, setPrestataires] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [filters, setFilters] = useState({ villes: [], zones: [], categories: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // États pour les filtres sélectionnés
+  
   const [selectedVille, setSelectedVille] = useState("");
   const [selectedZone, setSelectedZone] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(6); // 6 éléments par page par défaut
+  const [perPage, setPerPage] = useState(6); 
 
-  // --- DONNÉES GÉOGRAPHIQUES DYNAMIQUES COMPLÈTES ---
-  // Mise à jour avec El Jadida, Salé et corrections d'accents
   const villesZones = {
     "Agadir": [
       "Centre-ville", "Talborjt", "Dakhla", "Hay Salam", "Al Houda", 
@@ -388,7 +385,7 @@ const AllProviders = () => {
                         disabled={!selectedVille} // Optionnel : désactiver si vide
                     >
                       <option value="">
-                        {selectedVille ? "Sélectionner un Zone" : "Choisir une ville d'abord"}
+                        {selectedVille ? "Sélectionner un quartier" : "Choisir une ville d'abord"}
                       </option>
                       {zonesToDisplay.map((zone, index) => (
                         <option key={index} value={zone}>{zone}</option>
