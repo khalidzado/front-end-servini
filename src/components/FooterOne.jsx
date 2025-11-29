@@ -4,17 +4,9 @@ const FooterOne = () => {
   return (
     <>
       <footer className="footer-section">
-        <img
-          src="/assets/images/shapes/pattern.png"
-          alt=""
-          className="bg-pattern"
-        />
+        
        
-        <img
-          src="/assets/images/gradients/footer-gradient.png"
-          alt=""
-          className="bg--gradient"
-        />
+        
         <div className="container container-two">
           <div className="row gy-5">
             <div className="col-xl-3 col-sm-6">
@@ -109,13 +101,13 @@ const FooterOne = () => {
                 <h5 className="footer-widget__title text-white">Contact</h5>
                 <ul className="footer-lists">
                 <li className="footer-lists__item">
-    {/* Use <a> with mailto: for email links */}
+    
     <a href="mailto:support@servini.ma" className="footer-lists__link footer-lists__link2" >
         Email : support@servini.ma
     </a>
 </li>
 <li className="footer-lists__item">
-    {/* Use <a> with tel: for phone numbers */}
+  
     <a href="tel:+212632262044" className="footer-lists__link footer-lists__link2 ">
         Télé : 0632262044
     </a>
@@ -136,7 +128,6 @@ const FooterOne = () => {
           </div>
         </div>
       </footer>
-      {/* bottom Footer */}
       <div className="bottom-footer">
         <div className="container container-two">
           <div className="bottom-footer__inner flx-between gap-3">
